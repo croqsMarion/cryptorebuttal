@@ -1,0 +1,196 @@
+Dear author,
+
+We regret to inform you that your paper #849 "Proving modern code-based
+dual attacks..." has been rejected and will not be published at Crypto
+2026. The reviews may be found at the end of this email or at
+https://submit.iacr.org/crypto2026/paper/849
+
+We had a record-setting 781 submissions this year, and the competition
+was especially fierce.  Rejection is not necessarily a sign that the
+reviewers believe your submission is low quality.  We hope that you will
+find the reviewer feedback helpful in preparing a future submission.
+
+Sincerely,
+Crypto 2026 program chairs <crypto2026programchairs@iacr.org>
+
+Review #849A
+===========================================================================
+
+Paper summary
+-------------
+Submission #849 offers a proof that a provided variant of double-RLPN can solve the binary decoding problem by way of a reduction from the dual attack to the learning parity with noise LPN problem.  The key advances offered in the paper include 1) the observation that an analysis of properties of the score function used in the algorithm allows a proof that doesn't rely on the type of assumptions that previous work in this direction required, 2) an update due to their tweak of the rate regime in which the proof is valid and 3) an analysis of the new approach that shows that its performance is only diminished by a polynomial up to polynomial factors.  The authors also offer an extremely brief discussion of the possibility of moving this approach across norms to apply to lattice attacks, however, this portion of the work seems extremely underdeveloped.
+
+Strengths and weaknesses
+------------------------
+Strengths:  The main contribution of the work is relevant and of interest for the community.  The approach is very reasonable.  Weaknesses:  The paper seems a bit hastily put together to me.  It has many issues in its presentation including the lack of key definitions that are required for the paper to act as a cohesive exposition of the topic.  A component offered as a contribution in the introduction is not addressed in sufficient detail in the paper, though there is still space available in the submission.
+
+Detailed review text
+--------------------
+Submission #849 offers a proof that a provided variant of double-RLPN can solve the binary decoding problem by way of a reduction from the dual attack to the learning parity with noise LPN problem.  The key advances offered in the paper include 1) the observation that an analysis of properties of the score function used in the algorithm allows a proof that doesn't rely on the type of assumptions that previous work in this direction required, 2) an update due to their tweak of the rate regime in which the proof is valid and 3) an analysis of the new approach that shows that its performance is only diminished by a polynomial up to polynomial factors.  The authors also offer an extremely brief discussion of the possibility of moving this approach across norms to apply to lattice attacks, however, this portion of the work seems extremely underdeveloped.
+
+The approach that the authors employ is to focus on the second-order behavior of the score function, specifically they analyze the spread of the score function values.  This analysis allows the procedure to guess in polynomial time of a noise component with reasonably good probability using a coordinate flipping gadget.  The success analysis depends entirely on this second-order behavior, and thus removes the need for heuristics.
+
+The approach is quite reasonable in my opinion and the topic is definitely of interest.  I believe that this type of work is valuable and will support further advances in this direction.  There are a few issues that I have that make me not support the paper as much as I would hope.
+
+First, it seems to me that the paper feels a bit hastily written.  There are a very large number of typos and issues that seem a bit inappropriate for a finished work.  I have listed a few examples below in comments, but I saw more in the paper.  I would make an exhaustive list, but it seems a bit unfair to me to do so when it seems the not a sufficient amount of care was taken to produce a final product for the PC consideration.  Another issue, which is minor, is that there is as much attention paid to the idea of extending these ideas to the LWE setting in the introduction as in the body of the text.  This portion of the work is not really developed in any reasonable detail, so perhaps it should be more of a remark than a promise of a contribution.
+
+In the end, I have mixed feelings about the paper and I will mark it as borderline in my list.  Please find below a list of detailed observations about the paper.
+
+Comment: The abbreviation LPN is never defined.  While anyone working in this area knows learning parity with noise, this should be defined for completeness and accessibility for the entire community.  Actually, I am realizing now that the same applies for RLPN.  Some new to this area may be introduced to Dual Attack 3.0 through this work, so it should provide the proper foundation.
+
+Comment: page 3 starts with an unwanted indentation in the middle of a sentence.  To avoid this issue, remove extra carriage returns after the equation environment.
+
+Typo: page 5: "variantof"
+
+Omission: page 7: "i) a guess can be tested in polynomial and" seems to be missing "time".
+
+Typo: page 7: "expect" -> "except"
+
+Typo: page 7: Your double quotation marks on the word "flipped" are not input properly for latex.  You should use double directed single quotes, i.e. ``flipped''.
+
+Comment: page 7: Again, I see an indentation in the middle of a sentence.  Please check everywhere that you have no blank lines in your source after equation environments.  LaTeX is designed to treat these as paragraph breaks and it causes many spacing and flow problems to have these breaks in unwanted places.
+
+Comment: page 15: There is a sentence in the middle of the page that overflows the margins.  I'm not sure that restricting the expression to be unbroken by line breaks will actually fix the issue.  Perhaps the authors could consider adding some specificity to the description by writing something similar to, "To work, the procedure \decodeddualvectors\ uses two subroutines: ..."  In the preamble the authors could define
+\newcommand{\decodeddualvectors}{\mbox{\sc Decoded-Dual-Vectors}}
+to ensure there are no line breaks or additional hyphenations in the name of the algorithm.  Similar care would need to be given to the mathematical expressions in the line to avoid unwanted line breaks, but such macros should resolve any other issues with the procedure names at least.
+
+Missing reference: Page 29 has a broken citation link.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #849B
+===========================================================================
+
+Paper summary
+-------------
+The paper devises a variant of the doubleRLPN dual attack for the binary decoding problem whose analysis does not rely on any heuristic model — notably not on the Poisson weight-enumerator model that underpins both the TCC 2023 corrected RLPN analysis and the Eurocrypt 2024 doubleRLPN paper. The main idea is pleasingly simple: flip coordinates of the noisy codeword one at a time, observe how the LPN score function reacts, and use the direction of change to guess whether each coordinate belongs to the error. Because each coordinate only requires distinguishing two distributions (flipped vs. unflipped), a second-order Chebyshev bound plus a union bound suffices — there is no need to control the full tail of the score function across the entire secret space. The authors claim performance matching the original doubleRLPN up to polynomial factors for rates R < 0.5, covering the regime where dual attacks beat ISDs. They also replace the sublinear-block juxtaposition code of [CDMT24] with a constant-block version decoded via syndrome tables, which tightens the superpolynomial loss down to polynomial.
+
+Strengths and weaknesses
+------------------------
+Strengths:
+
+Removing the Poisson model is a genuinely important goal. The heuristic status of existing dual-attack analyses has been a sore point ever since the Ducas–Pulles controversy, and a clean proof — even for a variant — would be a real contribution. The bit-flipping idea is clever and makes the proof conceptually much simpler than the tail-estimation route.
+
+The proof is organized in a modular way that I found easy to follow at the high level: a signal lemma (the bias gap in Lemma 7.3), a noise lemma (the Chebyshev-based concentration in Proposition 7.1), and an instantiation lemma (Proposition 7.5 for the juxtaposition code). Each piece has a clear role.
+
+The discussion in Section 8.2 drawing parallels with lattice-based dual attacks is brief but thought-provoking. I think this could genuinely guide future work on proving attacks like those in [CMST25].
+
+Weaknesses:
+
+The paper promises full rigor but does not quite deliver it. Multiple proofs assert key steps as "straightforward" or defer them to Taylor-expansion hand-waves. For a paper whose entire raison d'être is removing heuristics, this is a real problem — readers and cryptographers evaluating security claims need to be able to trust the proofs end-to-end.
+
+The polynomial overhead is never pinned down. The paper shows existence of some poly-bounded loss but does not bound its degree, and the step that would show the asymptotic exponent is preserved (the O(log² n) adjustment to w) is explicitly left unproved.
+
+Some scope claims are overstated, particularly around R ≤ 0.5 "naturally" satisfying all the new constraints.
+
+Detailed review text
+--------------------
+(A) The bit-flipping signal (Lemma 7.3).
+
+This is the lemma that makes the whole approach work: it says that δ_w^{(n−s)}(u−1) − δ_w^{(n−s)}(u) is at least (1/poly(n)) · δ_w^{(n−s)}(u), i.e., adjacent Krawtchouk biases differ by a polynomial fraction of themselves. The claim is believable and the recurrence in Lemma 10.5 is the right starting point.
+
+That said, I found a clear error in the proof (Appendix 10.2). Lemma 10.5 gives the difference as (2w/(n−s)) · δ_{w−1}^{(n−s−1)}(u−1), but when the authors apply it in the proof of Lemma 7.3, they write the difference as just δ_{w−1}^{(n−s−1)}(u−1) — the factor 2w/(n−s) has vanished. Now, in the constant-rate regime the authors care about, w = Θ(n−s) so this factor is Θ(1) and can be absorbed into f_1 without issue. But as written, the equation is wrong, and the authors should fix it and state explicitly that 2w/(n−s) ≥ 1/poly(n) under their parameter assumptions.
+
+More seriously, the next step — going from δ_{w−1}^{(n−s−1)}(u−1) to Ω̃(δ_w^{(n−s)}(u)) — is handled in two sentences citing "differentiability of κ on A along with Taylor's theorem." This is exactly where the proof needs to be careful. The authors need to verify that the shifted normalized pair ((w−1)/(n−s−1), (u−1)/(n−s−1)) stays strictly inside the non-oscillatory region A, with a margin that does not shrink faster than 1/n. The condition Root(K_w^{(n−s)}) − u ∈ Ω(n−s) should give this, but the conversion from a linear gap at the integer level to a uniform interior margin at the normalized level is not written out. For a fully rigorous paper, it has to be.
+
+(B) Variance bounds (Lemma 10.1, Proposition 7.1).
+
+The strategy here — decompose Var(F) ≤ V + C, observe that the covariance terms vanish when h_N ≠ g_N (because distinct nonzero vectors over F_2 give independent uniform shifts via R), and bound the remaining h_N = g_N terms by how many auxiliary-code blocks overlap — is the right idea. I do not see a structural error in the approach.
+
+I do have several concerns about the execution. First, the independence argument is stated too loosely. The reason the h_N ≠ g_N covariance vanishes is that (h_N R^T, g_N R^T) is jointly uniform when h_N, g_N are linearly independent over F_2, which follows from Lemma 10.3. This is the core technical point — it is what distinguishes this second-moment method from the broken independence assumptions of earlier work — and it deserves more than a passing reference.
+
+Second, there appears to be a typo in the statement of Lemma 10.4: the variance bound involves 2^{s^{(i)} − t_{aux}^{(i)}} in the denominator, but Lemma 2.9 applied to the auxiliary code gives 2^{s^{(i)} − k_{aux}^{(i)}} (the codimension). Looking at the proof of Lemma 10.1 (which uses this result), the k_{aux}-based quantity is what actually appears. So this seems to be a typo in the lemma statement, not a mathematical error — but it is an unfortunate one in a paper about rigor.
+
+Third, the compression from Lemma 10.4 to Lemma 10.1 introducing the n^{b+1} factor is not adequately explained. The authors themselves seem unsure about it (Remark 10.2 conjectures it should really be O(2^b)). Since the theorem only needs a polynomial bound, the looseness is tolerable, but the intermediate steps should be spelled out.
+
+(C) Juxtaposition codes (Proposition 7.5).
+
+The idea of using b = ⌈s/k_{aux}⌉ blocks with syndrome-table decoding is natural and the sample-count part of Proposition 7.5 (comparing products of blockwise binomial coefficients to the global one) is a direct application of Proposition 2.14. I have no issues there.
+
+The bias-product comparison is harder: it amounts to showing that ∑_j κ(ω_j, τ_j) is close to κ(ω, τ) when the (ω_j, τ_j) are the blockwise normalized parameters and (ω, τ) is the global one. For constant b this should follow from a mean-value argument on κ, but the proof just says "straightforward using Proposition 2.14 and Proposition 2.15" without doing it. Given that the analogous Taylor step in Lemma 7.3 is already under-justified, I think the authors need to write this out.
+
+I also want to flag that the entire juxtaposition-code story only works because b is constant, which is only guaranteed under the assumption s/k_{aux} ∈ O(1). The paper acknowledges this but sometimes writes as if the polynomial-loss result is more general than it is.
+
+(D) Constraints in Theorem 4.1.
+
+The starred constraints are consistent and I checked that they do not contradict each other for the parameter sets in [CDMT24]. A few remarks on scope:
+
+The information-set condition n − s − k ∈ ω(1) is automatic when R < 0.5, since n − s − k ≥ (n − 2k) + (k − s) and n − 2k = Ω(n) when R is bounded away from 1/2. At R = 0.5 exactly, this becomes k − s ∈ ω(1), which is not guaranteed just by s ≤ k. So the paper's "up to rate R ≤ 0.5" is slightly misleading — R strictly less than 0.5 is the clean regime.
+
+The constraint s/k_{aux} ∈ O(1) has nothing to do with the code rate; it comes from the auxiliary-code design. The paper's discussion lumps it together with the R ≤ 0.5 story in a way that overstates how automatic it is.
+
+Neither of these is a correctness issue — the constraints are what they are — but the paper should be more precise about what is assumed vs. what follows from the rate condition.
+
+(E) Polynomial overhead.
+
+The final time and memory formulas look right in shape. My issue is not with the formulas themselves but with the gap between what is proved and what is claimed. The proof produces a sample threshold N ≥ f(n^b) / (δ · δ_{aux})^2 where f = (f_0 f_1)^2 f_2^3 is some poly-bounded function whose degree is never specified. The paper then asserts (end of Section 4) that regardless of the polynomial, one can recover the original asymptotic exponent by nudging w upward by O(log² n), and that this "could rigorously be shown" by differentiating the relevant asymptotic expression. But it is not shown.
+
+For a paper about any other topic, this would be a minor loose end. For a paper whose headline is "fully proved without models," it is a significant omission: it is precisely the step that turns "polynomial overhead exists" into "the provable variant matches the heuristic one in the exponent." I would like to see this argument made explicit, or at minimum a concrete bound on the degree of the overhead.
+
+Questions for authors
+---------------------
+1. In the proof of Lemma 7.3, the factor 2w/(n−s) from Lemma 10.5 disappears. I assume this is absorbed into f_1, but can you confirm and state the needed lower bound on w/(n−s) explicitly? More importantly, can you write out the Taylor/MVT argument showing that ((w−1)/(n−s−1), (u−1)/(n−s−1)) remains uniformly interior to A? This is the crux of the lemma and currently it is a two-sentence sketch.
+    
+2. The displayed variance bound in Lemma 10.4 has 2^{s^{(i)} − t_{aux}^{(i)}} in the denominator whereas Lemma 2.9 gives 2^{s^{(i)} − k_{aux}^{(i)}}. Is this a typo? The proof of Lemma 10.1 seems to use the k_{aux} version, so I think it is, but please clarify.
+    
+3. Can you supply the actual proof of Proposition 7.5 for the bias-product inequality? Specifically, the comparison of ∑_j κ(ω_j, τ_j) with κ(ω, τ) for constant b — this needs a mean-value argument on κ, not just a reference to differentiability.
+    
+4. At the end of Section 4 you write that increasing w by O(log^2 n) suffices to absorb the polynomial overhead, and that this "could rigorously be shown." Can you either provide this argument or give an explicit bound on the degree of f(n^b)? Without this, the paper proves polynomial overhead exists but does not confirm the exponent is preserved.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #849C
+===========================================================================
+
+Paper summary
+-------------
+This paper addresses a significant open problem in code-based cryptography: providing a rigorous, model-free proof for modern dual attacks on the Binary Decoding Problem. The state-of-the-art dual attack, doubleRLPN (Carrier et al., Eurocrypt 2024), was previously analyzed only under a heuristic Poisson model for the weight enumerator of random linear codes — a modeling assumption known to be delicate following the controversy sparked by Meyer-Hilfiger and Tillich (TCC 2023). The authors introduce a provable variant of doubleRLPN that avoids any such model, achieving the same asymptotic performance up to polynomial factors. The core technique is a coordinate-flipping observation: by flipping individual positions of the received noisy codeword and comparing the resulting score functions, one can infer each bit of the error component eN without ever needing to analyze the tail behavior of the score function for non-secret inputs. The analysis relies solely on well-established second-order (Bienaymé–Chebyshev) concentration bounds. The paper also instantiates the required auxiliary code using a constant-block juxtaposition code with a syndrome-table decoder, improving the polynomial overhead compared to the sublinear-block construction of the original doubleRLPN.
+
+Strengths and weaknesses
+------------------------
+Strengths
+- The elimination of heuristic modeling is a genuine and meaningful theoretical contribution. The paper solves a concrete open problem left explicitly unresolved in prior work.
+
+- The core technique is elegant and conceptually simple: coordinate flipping turns a hard distributional analysis problem into a sequence of elementary binary comparisons, each handled by standard concentration inequalities.
+
+- The algorithm and its proof are arguably cleaner than those of doubleRLPN, making the result more accessible.
+
+- The juxtaposition-code instantiation improves the polynomial overhead from superpolynomial to polynomial, which is a secondary but concrete improvement.
+
+- The discussion section is useful, sketching connections to lattice-based dual attacks and suggesting how the same proof strategy might apply to recent works such as CMST25.
+
+Weaknesses
+
+- Several proof steps are deferred to appendices with the phrase "the proof is straightforward," which, while likely accurate to experts, may leave some intermediate readers unable to fully verify the claimed bounds without additional effort. I understand the editorial limit of 30 pages but for example there is a spare page (main body is 29), so it would make sense to try and include a few more steps.
+
+- The discussion of lattice-based dual attacks (Section 8.2) remains very informal. Note that there is a broken citation here.
+
+- It would have been nice to see even a small numerical illustration comparing the polynomial overhead of the new construction against the original doubleRLPN, and it would strengthen confidence in the practical relevance of the result.
+
+- The paper focuses exclusively on binary codes. It would be interesting to have a least a hint on whether the techniques extend to larger alphabets, which matters for some code-based schemes.
+
+Detailed review text
+--------------------
+The contribution is clearly novel. Prior work either relied on the (flawed) independence LPN model (CDMT22) or on the heuristic Poisson weight-enumerator model (MT23, CDMT24). The paper breaks from both approaches by shifting the proof burden away from tail analysis of the score function for non-secret inputs and instead analyzing only the second-order behavior at the secret input. This is a meaningful conceptual departure. The coordinate-flipping idea is new in this context and the proof strategy has plausible applicability beyond code-based cryptography, as the authors themselves argue.
+
+The technical approach is also sound. The central Lemma 1.2 (second-order concentration of the score function) is a clean application of the Bienaymé–Chebyshev inequality, and its use is well-motivated. The key insight — that distinguishing whether a coordinate of eN is 0 or 1 requires comparing only two nearby bias values, each of which is polynomially separated from the other in the non-oscillatory regime of Krawtchouk polynomials — is made rigorous through Lemma 7.3, whose proof via recurrence relations for Krawtchouk polynomials is correct and complete. The use of juxtaposition codes is well-precedented (Guo et al., Asiacrypt 2014) and the choice of constant block count b is the right one to avoid the superpolynomial overhead that plagued the original construction. The proof of the main theorem in Appendix 10.3 is detailed and appears correct, to the best of my knowledge.
+
+Indeed, the technical details are sufficient to follow the idea of the paper, and again, I could not see any obvious mistakes.
+
+The paper is generally well-written and well-organized. The introduction effectively motivates the problem and clearly situates the contribution relative to prior work. Notation is introduced systematically in Section 2 and used consistently throughout. There are minor issues, like the broken citation in Section 8.2, and a few typos (e.g., "litterature" for "literature"), but none of these affect the mathematical content and they are easy to fix after a proofreading.
+
+The work is definitely relevant to the cryptographic community: code-based schemes such as HQC are now NIST standards, and the hardness of the Binary Decoding Problem directly underpins their security. Dual attacks that provably beat ISDs in certain rate regimes — now on rigorous mathematical footing — are directly relevant to parameter selection and security margin analysis for deployed systems. The paper's discussion of the parallel with lattice-based dual attacks further broadens its relevance.
+
+Overall, this is a solid theoretical contribution that resolves a concrete open problem in a clean and insightful way.
+
+Questions for authors
+---------------------
+Theorem 4.1 is stated for rate R ≤ 0.5, with the remark that the constraint n − s − k ∈ ω(1) could probably be removed "at the cost of a slightly more complex algorithm." Could the authors elaborate on what that more complex algorithm would look like, and whether the proof strategy would remain essentially the same?
+
+The paper focuses exclusively on binary codes. Do the authors see fundamental obstacles to extending the coordinate-flipping technique to q-ary codes, which would be relevant to schemes defined over larger fields?
+
+
