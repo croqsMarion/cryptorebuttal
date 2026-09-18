@@ -1,0 +1,42 @@
+-- RESPONSE TO REVIEWER A AND B --- (I received review C at reject notification)
+
+We would like to warmly thank both reviewers for their reviews and their interest in our paper.
+
+An updated version of the paper is available on request, should the reviewers wish to verify that all their comments have been properly taken into account.
+
+We now detail our responses to each reviewer's specific comments.
+
+Reviewer A: Thank you for your comments and suggestions. The presentation issues you referred to in your review have now been fixed, and we actually do apologize for the typos. We have corrected those you pointed out as well as several additional ones we identified. We have also reduced the scope of our claimed contribution regarding lattices in the introduction, changing:
+
+"We will also quickly explain the similarities between lattice-based dual attacks and code-based dual attacks to argue why our approach could be adapted to prove lattice-based attacks such as [CMST25] without using any model."
+
+to:
+
+"We will also briefly explain the similarities between lattice-based dual attacks and code-based dual attacks, and argue briefly why this could be a first step towards fully proving lattice-based dual attacks such as [CMST25] using similar techniques."
+
+Reviewer B: Thank you for your very precise comments and questions. We have addressed the weaknesses mentioned in your review in the updated paper, primarily by adding details to some of the proofs and replacing R <= 0.5 with R < 0.5 throughout.
+
+----
+1. There was indeed a small error in the proof: we have added the missing factor 2w/(n-s). As you mentioned, it does not change anything in the result because it is indeed absorbed into f_1. We have also added the requirement that the parameters lie in N* rather than N, and the condition s, w < n to the lemma statement so that everything is clean. We have added the requested proof details in the paper about the fact that ((w-1)/(n-s-1), (u-1)/(n-s-1)) lies uniformly in the interior of A.
+
+- Idea of the proof. Rather than relying on Taylor's theorem, we define f(w, u, n) = n/2 - sqrt(w*(n-w)) - u and prove that f(w-1, u-1, n-s-1) is in Omega(n-s) using elementary operations. We write f(w-1, u-1, n-s-1) = f(w, u, n-s) + D, where D = f(w-1, u-1, n-s-1) - f(w, u, n-s). A direct computation shows that D = 1/2 + sqrt(n-s-w) * (sqrt(w) - sqrt(w-1)) > 0, since both sqrt(n-s-w) and sqrt(w) - sqrt(w-1) are positive. We conclude using the parameter constraint Root(K_w^(n-s)) - u in Omega(n-s), which gives f(w, u, n-s) in Omega(n-s), and therefore f(w-1, u-1, n-s-1) in Omega(n-s).
+
+---
+2. This should indeed be k_{aux}.
+
+---
+3. The proof details based on a Taylor argument will appear in the final version of the paper.
+
+- Idea of the proof. We use the fact that w^{(j)} / n^{(j)} = w/n + O(1/n) and t^{(j)} / n^{(j)} = t/n + O(1/n) for all j in {1, ..., b}. Using the known formula for the gradient of the asymptotic expansion of Krawtchouk polynomials from [KS21, Section 2.1.2], we compute the gradient of the asymptotic expansion p of \delta_w^{(n-s)}(u). In our parameter regime, this gradient is bounded above in absolute value by a constant. Taylor's theorem then gives p(w^{(j)}/n^{(j)}, t^{(j)}/n^{(j)}) = p(w/n, t/n) + O(1/n) for each block j. Since b is a constant, summing over the blocks and exponentiating yields the result.
+
+---
+4. Your remark is entirely valid. We would like to add that most code-based papers claiming asymptotic gains actually make this kind of reasoning, but it is kept completely implicit. We agree that for dual attacks the situation is more delicate than for ISDs due to wilder constraints, but in any case this was necessarily and crucially used in all of the original dual attacks [DT17, CDMT22, MT23, CDMT24]. Indeed, in those papers, the asymptotic parameters (\omega, \sigma, ..., real numbers in [0,1]) are optimized under an asymptotic variant of the constraint N > 1/delta^2. But this does not prove that there actually exist sequences of integers (w, s, ...) that achieve the non-asymptotic constraint and the claimed complexity: indeed there is some polynomial overhead between the asymptotic and non-asymptotic constraints. We agree that our paper is a good place to make this parameter-nudging argument fully explicit, so we have added a precise statement and proof in the paper.
+
+- Detail on the statement. For any constant alpha > 0, and any parameters satisfying i) Root(K_w^{(n-s)}) - u in Omega(n-s) and ii) (n-s)/2 - w in Omega(n-s), it suffices to increase w by an additive term of at most O(log(n)) so that \binom{n-s}{w} \delta_w^{(n-s)}(u)^2 increases by a factor of at least Omega(n^alpha).
+
+- Idea of the proof. The derivative of the asymptotic expansion of Krawtchouk polynomials is known from [KS21, Section 2.1.2]. Combining this with the known derivative of the binary entropy function, we easily compute the derivative of the asymptotic expansion of \binom{n-s}{w} \delta_w^{(n-s)}(u)^2 with respect to w. Using the first constraint, we easily show that this derivative is greater than log_2(sqrt((1 - w/(n-s)) / (w/(n-s)))). The second constraint ensures that this last term is positive and bounded away from 0. Taylor's theorem then allows us to conclude.
+
+---
+About your remark: "The constraint s/k_{aux} ∈ O(1) has nothing to do with the code rate; it comes from the auxiliary-code design. The paper's discussion lumps it together with the R ≤ 0.5 story in a way that overstates how automatic it is."
+
+We are unsure about what you mean by this, as those two points are separately discussed in different items in Section 4. We will find a way to make the separation clearer and make the required clarification.
